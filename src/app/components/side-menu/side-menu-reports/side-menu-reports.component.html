@@ -1,0 +1,14 @@
+<label>
+
+  <span
+    class="block  rounded-sm bg-gray-50 px-4 py-0 text-cyan-800 shadow-lg transition-all duration-300 peer-checked/showLabel:max-h-52">
+
+    @for (item of reportes(); track item.id) {
+
+    <a class="flex flex-col">
+      {{item.nombre_tipo_reporte}}
+    </a>
+    }
+
+  </span>
+</label>

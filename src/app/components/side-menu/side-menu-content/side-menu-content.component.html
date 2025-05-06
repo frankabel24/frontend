@@ -1,0 +1,14 @@
+<label class="">
+  <input class="peer/showLabel absolute scale-0" type="checkbox" />
+  <span
+    class="block rounded-sm bg-gray-50 px-4 py-0 text-black shadow-lg transition-all duration-300 peer-checked/showLabel:max-h-52">
+    <h3 class="flex cursor-pointer items-center font-bold">Configuraciones</h3>
+    @for (item of contents(); track item.id) {
+
+    <a class="flex flex-col">
+      {{item.nombre_tipo_contenido}}
+    </a>
+    }
+
+  </span>
+</label>
