@@ -1,14 +1,22 @@
-<label class="">
-  <input class="peer/showLabel absolute scale-0" type="checkbox" />
-  <span
-    class="block rounded-sm bg-gray-50 px-4 py-0 text-black shadow-lg transition-all duration-300 peer-checked/showLabel:max-h-52">
-    <h3 class="flex cursor-pointer items-center font-bold">Configuraciones</h3>
-    @for (item of contents(); track item.id) {
-
-    <a class="flex flex-col">
-      {{item.nombre_tipo_contenido}}
+<details class="bg-white shadow  text-xl group mb-4">
+  <summary class="list-none outline outline-gray-700 flex flex-wrap items-center cursor-pointer
+  focus-visible:outline-none focus-visible:ring
+   group-open: group-open:z-[1] relative
+  ">
+    <h3 class="flex flex-1 p-4 font-semibold  ">Configuraciones</h3>
+    <div class="flex items-center justify-center">
+      <div class="border-8 border-transparent border-l-amber-600 ml-2
+      group-open:rotate-90 transition-transform origin-left
+      "></div>
+    </div>
+  </summary>
+  <div class="flex flex-col p-1 outline outline-gray-700 ">
+    <a class="p-3 cursor-pointer active:text-amber-600 border-b-2 border-gray-700">
+      Tipos de Contenido
     </a>
-    }
+    <a class="p-3 cursor-pointer active:text-amber-600 ">
+      Tipos de Reportes
+    </a>
 
-  </span>
-</label>
+  </div>
+</details>

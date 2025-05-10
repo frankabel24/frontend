@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { ContentType } from '../../../interfaces/content-type.interface';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { SideMenuItemComponent } from "../side-menu-reports/side-menu-item.component";
+import { ModuleService } from '../../../services/module.service';
 
 @Component({
   selector: 'app-side-menu-content',
@@ -8,5 +9,5 @@ import { ContentType } from '../../../interfaces/content-type.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideMenuContentComponent {
-  contents = input.required<ContentType[]>();
+  moduloService = inject(ModuleService);
 }

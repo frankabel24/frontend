@@ -1,0 +1,32 @@
+<style>
+  a active {
+    color: orange;
+  }
+</style>
+<!-- <div class="flex flex-col  bg-gray-50 text-xl  transition-all duration-300 peer-checked/showLabel:max-h-52">
+
+
+  <a class=" p-3 cursor-pointer active:text-amber-600 outline outline-gray-700" [routerLink]="['/routePath']"
+    routerLinkActive="router-link-active">
+    Reportes de tipo Cuantitativo
+  </a>
+  <a class="p-3 cursor-pointer active:text-amber-600 outline outline-gray-700">
+    Reportes de tipo Listado
+  </a>
+  <a class="p-3 cursor-pointer active:text-amber-600 outline outline-gray-700">
+    Reportes de tipo Cruzado
+  </a>
+
+
+
+</div> -->
+
+<div class="flex flex-col  bg-gray-50 text-xl  transition-all duration-300 peer-checked/showLabel:max-h-52">
+
+  @for (item of reportes(); track item.id) {
+  <a class=" p-3 cursor-pointer outline outline-gray-700 text-center hover:text-amber-600"
+    [routerLink]="[`/${item.nombre_tipo_reporte}`]" routerLinkActive="text-amber-600">
+    {{item.nombre_tipo_reporte}}
+  </a>
+  }
+</div>
