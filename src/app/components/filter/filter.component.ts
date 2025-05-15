@@ -1,12 +1,12 @@
-import { JsonPipe } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+
+import { Component, effect, inject, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { of, switchMap, tap } from 'rxjs';
 import { FormUtils } from '../../utils/form-utils';
 
 @Component({
   selector: 'app-filter',
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './filter.component.html',
 })
 export class FilterComponent {
@@ -68,6 +68,7 @@ export class FilterComponent {
   campos = signal(this.opcionesCampo);
   valores = signal<string[]>([]);
   filtroString = signal('');
+  filtrosSeleccionados = output<string>();
 
 
   myForm: FormGroup = this.fb.group({
@@ -119,6 +120,10 @@ export class FilterComponent {
     this.filtroString.update(prev => prev ? `${prev} ${palabra}` : '');
   }
 
+  emitirOutput(filtros: string) {
+    this.filtrosSeleccionados.emit(filtros);
+  }
+
   onAdicionar() {
     this.myForm.markAllAsTouched();
 
@@ -130,6 +135,8 @@ export class FilterComponent {
       const filtroActual = `${campo} ${signo} ${valor}`;
 
       this.filtroString.update(prev => prev ? `${prev} ${filtroActual}` : filtroActual);
+
+      this.emitirOutput(this.filtroString());
     }
   }
 }

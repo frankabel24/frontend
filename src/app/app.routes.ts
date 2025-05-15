@@ -3,16 +3,16 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 
   {
-    path: 'Listado',
-    loadComponent: () => import('./pages/listado-page/listado-page.component'),
+    path: 'dashboard-listado',
+    loadChildren: () => import('./pages/listado-page/listado.routes').then(m => m.listadoRoutes),
   },
   {
-    path: 'Cruzado',
-    loadComponent: () => import('./pages/cruzado-page/cruzado-page.component'),
+    path: 'dashboard-cuantitativo',
+    loadChildren: () => import('./pages/cuantitativo-page/cuantitativo.routes').then(m => m.cuantitativoRoutes),
   },
   {
-    path: 'Cuantitativo',
-    loadComponent: () => import('./pages/cuantitativo-page/cuantitativo-page.component'),
+    path: 'dashboard-cruzado',
+    loadChildren: () => import('./pages/cruzado-page/cruzado.routes').then(m => m.cruzadoRoutes),
   },
   {
     path: 'registrar-carpeta',
@@ -23,11 +23,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/modificar-carpeta/modificar-carpeta.component'),
   },
   {
-    path: 'nuevo-informe',
-    loadComponent: () => import('./pages/nuevo-informe/nuevo-informe.component'),
-  },
-  {
     path: '**',
-    redirectTo: 'Listado'
+    redirectTo: 'dashboard-listado'
   }
 ];

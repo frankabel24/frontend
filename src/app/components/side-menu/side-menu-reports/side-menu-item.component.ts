@@ -12,4 +12,5 @@ export class SideMenuItemComponent {
   moduloService = inject(ModuleService);
   reportes = input.required<ReportType[]>();
 
+  getPath = this.moduloService.getType();
 }

@@ -12,8 +12,11 @@ export class HeaderComponent {
   id_item = input.required<{ id: number, tipo: 'carpeta' | 'reporte' }>()
   moduloService = inject(ModuleService);
 
+  get reportePath() {
+    return this.moduloService.getReportePath();
+  }
+
   onClick() {
     this.moduloService.obtenerElemento(this.id_item());
-    console.log('Se realizo la llamada al service');
   }
 }

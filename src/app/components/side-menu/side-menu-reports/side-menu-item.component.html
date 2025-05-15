@@ -25,7 +25,8 @@
 
   @for (item of reportes(); track item.id) {
   <a class=" p-3 cursor-pointer outline outline-gray-700 text-center hover:text-amber-600"
-    [routerLink]="[`/${item.nombre_tipo_reporte}`]" routerLinkActive="text-amber-600">
+    [routerLink]="[`/dashboard-${item.nombre_tipo_reporte.toLowerCase()}/${item.nombre_tipo_reporte}`]"
+    routerLinkActive="text-amber-600">
     {{item.nombre_tipo_reporte}}
   </a>
   }

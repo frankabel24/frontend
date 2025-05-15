@@ -1,12 +1,12 @@
-import { DirectorioComponent } from './../directorio/directorio.component';
+import { DirectorioComponent } from '../../directorio/directorio.component';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { HeaderComponent } from "../../components/header/header.component";
-import { DetailsPageComponent } from "../details-page/details-page.component";
-import { SideMenuComponent } from "../../components/side-menu/side-menu.components";
-import { ModuleService } from '../../services/module.service';
-import { Directorio } from '../../interfaces/directorio.interface';
-import { Folder } from '../../interfaces/folder.interface';
-import { Reporte } from '../../interfaces/reporte.interface';
+import { HeaderComponent } from "../../../components/header/header.component";
+import { DetailsPageComponent } from "../../details-page/details-page.component";
+import { SideMenuComponent } from "../../../components/side-menu/side-menu.components";
+import { ModuleService } from '../../../services/module.service';
+import { Directorio } from '../../../interfaces/directorio.interface';
+import { Folder } from '../../../interfaces/folder.interface';
+import { Reporte } from '../../../interfaces/reporte.interface';
 
 @Component({
   selector: 'app-cruzado-page',
@@ -25,6 +25,7 @@ export default class CruzadoPageComponent {
 
 
   constructor() {
+    this.moduloService.setType('cruzado');
     this.moduloService.getDirectorio(3).subscribe((resp) => {
       this.directorio.set(resp);
     })

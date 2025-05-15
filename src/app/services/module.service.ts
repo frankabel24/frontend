@@ -19,6 +19,7 @@ export class ModuleService {
   carpetas = signal<Folder[]>([]);
   elemento = signal<{ id: number, tipo: 'carpeta' | 'reporte' }>({ id: 0, tipo: 'carpeta' });
   reporte = signal<Reporte>({} as Reporte);
+  private currentType: 'listado' | 'cuantitativo' | 'cruzado' = 'listado';
 
   constructor() {
     this.getCarpetas();
@@ -73,5 +74,28 @@ export class ModuleService {
       this.elemento.set({ id: this.reporte().id_padre, tipo: 'reporte' });
     }
     this.elemento.set(elemento);
+  }
+
+
+  //Funcion que ayuda con las rutas dinamicas
+  setType(type: 'listado' | 'cuantitativo' | 'cruzado') {
+    this.currentType = type;
+  }
+
+  getType() {
+    return this.currentType;
+  }
+
+  getReportePath() {
+    const paths = {
+      listado: 'nuevo-reporte-listado',
+      cuantitativo: 'nuevo-reporte-cuantitativo',
+      cruzado: 'nuevo-reporte-cruzado'
+    };
+    return paths[this.currentType];
+  }
+
+  agregarReporte(reporte: any) {
+    this.http.post(`${environment.reportUrls}`, reporte);
   }
 }

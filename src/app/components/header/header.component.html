@@ -8,12 +8,12 @@
           <i class="fa-solid fa-file-circle-plus" style="color: #d68e1e;"></i>
         </a>
 
-        <a routerLink="/modificar-carpeta"
+        <a routerLink="/modificar-carpeta" (click)="onClick()"
           class=" hover:bg-gray-50 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium"><i
             class="fa-solid fa-pen-to-square" style="color: #f08428;"></i>
         </a>
 
-        <a routerLink="/nuevo-informe"
+        <a [routerLink]="[`/dashboard-${moduloService.getType().toLowerCase()}`, reportePath]" (click)="onClick()"
           class=" hover:bg-gray-50  inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">
           <i class="fa-solid fa-file-circle-plus" style="color: #d68e1e;"></i>
         </a>
