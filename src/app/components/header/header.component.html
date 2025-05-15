@@ -3,15 +3,18 @@
     <nav class="hidden lg:flex lg:space-x-8 lg:py-2 lg:justify-end" aria-label="Global">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       <div class="flex gap-1">
-        <a href="#" class=" hover:bg-gray-50  inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">
+        <a [routerLink]="'/registrar-carpeta'" routerLinkActive="active" (click)="onClick()"
+          class=" hover:bg-gray-50  inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">
           <i class="fa-solid fa-file-circle-plus" style="color: #d68e1e;"></i>
         </a>
 
-        <a href="#" class=" hover:bg-gray-50 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium"><i
-            class="fa-solid fa-folder" style="color: #d68e1e;"></i>
+        <a routerLink="/modificar-carpeta"
+          class=" hover:bg-gray-50 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium"><i
+            class="fa-solid fa-pen-to-square" style="color: #f08428;"></i>
         </a>
 
-        <a href="#" class=" hover:bg-gray-50  inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">
+        <a routerLink="/nuevo-informe"
+          class=" hover:bg-gray-50  inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">
           <i class="fa-solid fa-file-circle-plus" style="color: #d68e1e;"></i>
         </a>
 

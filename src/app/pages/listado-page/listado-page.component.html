@@ -1,12 +1,15 @@
-<app-header />
+<app-header [id_item]="hoveredItem()" />
 
 <div class="flex justify-between bg-gray-200">
   <section class=" w-xl  ">
-    <app-directorio [directorio]="directorio()" />
+    <app-directorio [directorio]="directorio()" (item)="mandarItem($event)" />
   </section>
 
-  <section class="w-xl bg-fuchsia-600">
-    <app-details-page />
+
+  <section class="w-xl ">
+
+    <app-details-page [item]="hoveredItem()" />
+
   </section>
 
   <aside class="w-lg grid  bg-gray-200 p-2 min-h-screen">

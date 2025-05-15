@@ -1,4 +1,4 @@
-<app-header />
+<app-header [id_item]="hoveredItem()" />
 
 <div class="flex justify-between bg-gray-200">
   <section class=" w-xl ">
@@ -6,7 +6,9 @@
   </section>
 
   <section class="w-xl bg-fuchsia-600">
-    <app-details-page />
+    @if(hoveredItem() != null){
+    <app-details-page [item]="hoveredItem()" />
+    }
   </section>
 
   <aside class="w-lg grid  bg-gray-200 p-2 min-h-screen">

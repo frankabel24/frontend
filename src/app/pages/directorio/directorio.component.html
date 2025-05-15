@@ -1,41 +1,6 @@
 <section class="bg-amber-50 w-sm flex flex-col justify-center align-middle  ml-8 mt-26  p-6">
 
-  @for (carpeta of directorio(); track carpeta.id_carpeta) {
-  <app-carpeta-recursiva [carpeta]="carpeta" />
-
+  @for (carpeta of directorio(); track carpeta.carpeta.id) {
+  <app-carpeta-recursiva [carpeta]="carpeta" (hoveredItem)="obtenerItem($event)" />
   }
-
-  <!-- <button (click)="obtenerDirectorio()">
-    Click
-  </button> -->
-
 </section>
-
-
-<!-- <section class="bg-amber-50 flex flex-col align-middle p-6 ">
-  @for (item of directorio; track item.id_carpeta) {
-  <div class="flex gap-0.5 items-center">
-    <i class="fa-solid fa-folder-open" style="color: #d68e1e;"></i>
-    <span>{{item.nombre}}</span>
-  </div>
-
-  @if (item.carpetas_hija) {
-  @for (carpeta of item.carpetas_hija; track carpeta.id_carpeta) {
-  <div class="flex gap-0.5 ml-2 items-center">
-    <i class="fa-solid fa-folder-open" style="color: #d68e1e;"></i>
-    <span>{{carpeta.nombre}}</span>
-  </div>
-  }
-  }
-
-  @if(item.reportes){
-  @for (reporte of item.reportes; track reporte.id) {
-  <div class="flex gap-0.5 items-center">
-    <i class="fa-solid fa-file" style="color: #f08e1e;"></i>
-    <span>{{reporte.titulo_reporte}}</span>
-  </div>
-  }
-
-  }
-  }
-</section> -->

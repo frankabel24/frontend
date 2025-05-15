@@ -15,6 +15,18 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/cuantitativo-page/cuantitativo-page.component'),
   },
   {
+    path: 'registrar-carpeta',
+    loadComponent: () => import('./pages/registrar-carpeta/registrar-carpeta.component'),
+  },
+  {
+    path: 'modificar-carpeta',
+    loadComponent: () => import('./pages/modificar-carpeta/modificar-carpeta.component'),
+  },
+  {
+    path: 'nuevo-informe',
+    loadComponent: () => import('./pages/nuevo-informe/nuevo-informe.component'),
+  },
+  {
     path: '**',
     redirectTo: 'Listado'
   }

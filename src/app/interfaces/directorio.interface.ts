@@ -1,21 +1,22 @@
+import { Folder } from "./folder.interface";
+import { Reporte } from "./reporte.interface";
+
+// export interface Directorio {
+//   id_carpeta: number;
+//   nombre: string;
+//   propietario: string;
+//   carpetas_hija: Directorio[];
+//   reportes: Reporte[];
+// }
 export interface Directorio {
-  id_carpeta: number;
-  nombre: string;
+  carpeta: Folder;
   carpetas_hija: Directorio[];
   reportes: Reporte[];
 }
 
-export interface Reporte {
-  id: number;
-  activo: boolean;
-  fecha_registro: Date;
-  titulo_reporte: string;
-  realizado_por: string;
-  descripcion: string;
-  filtros: string;
-  campos_seleccionados: string;
-  id_tipo_contenido: 2;
-  id_padre: number;
-  id_tipo_reporte: number;
-}
+
+
+
+
+
 

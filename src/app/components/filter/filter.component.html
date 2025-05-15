@@ -1,0 +1,70 @@
+<form class="flex flex-col  gap-4 p-8" [formGroup]="myForm">
+  <span>Filtrado del reporte</span>
+  @if(filtroString()){
+  <span>{{filtroString()}}</span>
+  }
+
+
+  <button
+    class=" w-xs px-4 py-2 border border-transparent   rounded-md shadow-sm bg-amber-500 hover:bg-amber-700 text-white float-right"
+    (click)="borrarFiltro()">Borrar
+    Filtro
+  </button>
+
+  <span>Conectores de Filtro</span>
+  <div class="flex gap-3 font-bold">
+    <a class="cursor-pointer hover:underline ml-10" (click)="adicionarAlFiltro('Y')">Y</a>
+    <a class="cursor-pointer hover:underline" (click)="adicionarAlFiltro('O')">O</a>
+  </div>
+
+  <div class="flex gap-5">
+
+    <div class="flex flex-col">
+      <label>Campo</label>
+      <select formControlName="campo">
+        <option value="">-- Seleccione campo --</option>
+        @for (item of campos(); track $index) {
+        <option [value]='item'>{{item}}</option>
+        }
+      </select>
+      @if(formUtils.isValidField(myForm, 'campo')){
+      <span class="text-red-600">{{formUtils.getFieldError(myForm, 'campo')}}</span>
+      }
+
+
+    </div>
+
+    <div class="flex flex-col">
+      <label>Signo</label>
+      <select formControlName="signo">
+        <option value="">-- Seleccione signo --</option>
+        @for (item of signoOptions; track $index) {
+        <option [value]='item'>{{item}}</option>
+        }
+      </select>
+      @if(formUtils.isValidField(myForm, 'signo')){
+      <span class="text-red-600">{{formUtils.getFieldError(myForm, 'signo')}}</span>
+      }
+
+    </div>
+
+    <div class="flex flex-col">
+      <label>Valor</label>
+      <select formControlName="valor">
+        <option value="">-- Seleccione valor --</option>
+        @for (valor of valores(); track $index) {
+        <option [value]='valor'>{{valor}}</option>
+        }
+      </select>
+      @if(formUtils.isValidField(myForm, 'valor')){
+      <span class="text-red-600">{{formUtils.getFieldError(myForm, 'valor')}}</span>
+      }
+
+    </div>
+
+    <button
+      class=" px-4 py-2 border border-transparent   rounded-md shadow-sm bg-amber-500 hover:bg-amber-700 text-white float-right"
+      (click)="onAdicionar()">Adicionar</button>
+
+  </div>
+</form>

@@ -1,22 +1,24 @@
 <a class="flex gap-1 items-center cursor-pointer ">
   <i class="fa-solid fa-folder-open" style="color: #d68e1e;"></i>
-  <span class="px-2 rounded cursor-pointer transition-colors duration-200 active:bg-blue-600">
-    {{carpeta().nombre}}
+  <span class="px-2 rounded cursor-pointer transition-colors duration-200 hover:bg-blue-600"
+    (click)="onClick({id: carpeta().carpeta.id, tipo: 'carpeta'})">
+    {{carpeta().carpeta.nombre_carpeta}}
   </span>
 </a>
 <div class="ml-4">
 
-  @for (hija of carpeta().carpetas_hija; track hija) {
+  @for (hija of carpeta().carpetas_hija; track hija.carpeta.id) {
   <a>
-    <app-carpeta-recursiva [carpeta]="hija"></app-carpeta-recursiva>
+    <app-carpeta-recursiva [carpeta]="hija" (hoveredItem)="onClick($event)"></app-carpeta-recursiva>
   </a>
   }
 
   @for (reporte of carpeta().reportes; track reporte.id) {
   <a>
-    <div class="flex gap-0.5 items-center">
+    <div class="flex gap-0.5 items-center cursor-pointer">
       <i class="fa-solid fa-file" style="color: #f08e1e;"></i>
-      <span>{{reporte.titulo_reporte}}</span>
+      <span class="px-2 rounded hover:bg-blue-600"
+        (click)="onClick({id: reporte.id, tipo: 'reporte'})">{{reporte.titulo_reporte}}</span>
     </div>
   </a>
   }

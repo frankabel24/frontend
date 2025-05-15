@@ -5,6 +5,8 @@ import { ContentType } from '../interfaces/content-type.interface';
 import { ReportType } from '../interfaces/report-type.interface';
 import { Folder } from '../interfaces/folder.interface';
 import { Directorio } from '../interfaces/directorio.interface';
+import { BehaviorSubject } from 'rxjs';
+import { Reporte } from '../interfaces/reporte.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,8 @@ export class ModuleService {
   contentType = signal<ContentType[]>([]);
   reportTypes = signal<ReportType[]>([]);
   carpetas = signal<Folder[]>([]);
-  directorio = signal<Directorio[]>([]);
+  elemento = signal<{ id: number, tipo: 'carpeta' | 'reporte' }>({ id: 0, tipo: 'carpeta' });
+  reporte = signal<Reporte>({} as Reporte);
 
   constructor() {
     this.getCarpetas();
@@ -26,14 +29,12 @@ export class ModuleService {
   getContentTypes() {
     this.http.get<ContentType[]>(`${environment.contentTypeUrls}`).subscribe((resp) => {
       this.contentType.set(resp);
-      console.log(this.contentType());
     })
   }
 
   getReportTypes() {
     this.http.get<ReportType[]>(`${environment.reportTypeUrls}`).subscribe((resp) => {
       this.reportTypes.set(resp);
-      console.log(this.reportTypes());
     })
   }
 
@@ -41,7 +42,6 @@ export class ModuleService {
   getCarpetas() {
     this.http.get<Folder[]>(`${environment.folderUrls}`).subscribe((resp) => {
       this.carpetas.set(resp);
-      console.log(resp);
     })
   }
 
@@ -53,5 +53,25 @@ export class ModuleService {
     })
 
     return this.http.get<Directorio[]>(`${environment.directorioUrls}`, { headers });
+  }
+
+
+  obtenerCarpetaById(id: number) {
+    return this.http.get<Folder>(`${environment.folderUrls}${id}/`)
+  }
+
+  obtenerReporteById(id: number) {
+    return this.http.get<Reporte>(`${environment.reportUrls}${id}/`)
+  }
+
+  obtenerElemento(elemento: { id: number, tipo: 'carpeta' | 'reporte' }): void {
+
+    if (elemento.tipo === 'reporte') {
+      this.obtenerReporteById(elemento.id).subscribe((resp) => {
+        this.reporte.set(resp);
+      });
+      this.elemento.set({ id: this.reporte().id_padre, tipo: 'reporte' });
+    }
+    this.elemento.set(elemento);
   }
 }
