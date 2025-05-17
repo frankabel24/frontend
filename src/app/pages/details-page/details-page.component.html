@@ -1,7 +1,3 @@
-<button (click)="obtenerDatos()">
-  Ver Detalles
-</button>
-
 @if(carpeta().id){
 <section class="bg-amber-50 w-sm flex flex-col justify-center align-middle   p-6">
   <header class="flex justify-between">
@@ -44,14 +40,17 @@
 }
 
 @if(reporte().id){
-<section class="bg-amber-50 w-sm flex flex-col justify-center align-middle   p-6">
+<section class="flex flex-col  justify-between items-center p-12 bg-gray-50">
   <header class="flex justify-between">
     <p>Ver detalles del reporte</p>
     <div class="flex gap-2">
-      <button class="hover:bg-gray-200 rounded-md py-1 px-2 cursor-pointer">
+      <button class="hover:bg-gray-200 rounded-md py-1 px-2 cursor-pointer" (click)="onMostrar()">
+        <i class="fa-solid fa-eye" style="color: #d68e1e;"></i>
+      </button>
+      <button class="hover:bg-gray-200 rounded-md py-1 px-2 cursor-pointer" (click)="onModificar()">
         <i class="fa-solid fa-file-lines" style="color: #d68e1e;"></i>
       </button>
-      <button class="hover:bg-gray-200 rounded-md py-1 px-2 cursor-pointer">
+      <button class="hover:bg-gray-200 rounded-md py-1 px-2 cursor-pointer" (click)="onDelete(reporte().id)">
         <i class="fa-solid fa-file-excel" style="color: #d68e1e;"></i>
       </button>
 

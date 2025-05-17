@@ -1,4 +1,4 @@
-<section class="bg-amber-50 w-sm flex flex-col justify-center align-middle  ml-8 mt-26  p-6">
+<section class="bg-amber-50 p-10 ">
 
   @for (carpeta of directorio(); track carpeta.carpeta.id) {
   <app-carpeta-recursiva [carpeta]="carpeta" (hoveredItem)="obtenerItem($event)" />

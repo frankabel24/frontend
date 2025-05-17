@@ -3,7 +3,7 @@ import CuantitativoPageComponent from "./cuantitativo-component/cuantitativo-pag
 import { NuevoReporteCuantitativoComponent } from "./nuevo-reporte-cuantitativo/nuevo-reporte-cuantitativo.component";
 import { ModificarReporteCuantitativoComponent } from "./modificar-reporte-cuantitativo/modificar-reporte-cuantitativo.component";
 import { MostrarReporteCuantitativoComponent } from "./mostrar-reporte-cuantitativo/mostrar-reporte-cuantitativo.component";
-import { VerDetallesReporteCuantitativoComponent } from "./ver-detalles-reporte-cuantitativo/ver-detalles-reporte-cuantitativo.component";
+
 
 export const cuantitativoRoutes: Routes = [
   {
@@ -20,19 +20,14 @@ export const cuantitativoRoutes: Routes = [
         component: NuevoReporteCuantitativoComponent,
       },
       {
-        path: 'modificar-reporte-cuantitativo',
+        path: 'modificar-reporte-cuantitativo/:id',
         title: 'Modificar Reporte de tipo cuantitativo',
         component: ModificarReporteCuantitativoComponent,
       },
       {
-        path: 'mostrar-reporte-cuantitativo',
+        path: 'mostrar-reporte-cuantitativo/:id',
         title: 'Mostrar Reporte de tipo cuantitativo',
         component: MostrarReporteCuantitativoComponent,
-      },
-      {
-        path: 'ver-detalles-reporte-cuantitativo',
-        title: 'Ver Detalles de Reporte de tipo cuantitativo',
-        component: VerDetallesReporteCuantitativoComponent,
       },
       {
         path: '**',

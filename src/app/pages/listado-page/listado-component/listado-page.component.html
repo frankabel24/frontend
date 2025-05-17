@@ -1,19 +1,20 @@
-<router-outlet></router-outlet>
 <app-header [id_item]="hoveredItem()" />
 
-<div class="flex justify-between bg-gray-200">
-  <section class=" w-xl  ">
+<div class="flex justify-between items-center min-h-screen bg-gray-200">
+  <section class="flex-1  rounded-lg mx-4 ">
     <app-directorio [directorio]="directorio()" (item)="mandarItem($event)" />
   </section>
 
 
-  <section class="w-xl ">
+  <section class="flex-1 p-4 rounded-lg mx-4">
+    @if (selectedItem() !== null) {
+    <app-details-page [item]="selectedItem()" />
+    }
 
-    <app-details-page [item]="hoveredItem()" />
 
   </section>
 
-  <aside class="w-lg grid  bg-gray-200 p-2 min-h-screen">
+  <aside class="flex-1  p-4 rounded-lg mx-4">
     <app-side-menu />
   </aside>
 

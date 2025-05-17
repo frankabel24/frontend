@@ -1,12 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { HeaderComponent } from "../../../components/header/header.component";
 import { DirectorioComponent } from "../../directorio/directorio.component";
 import { DetailsPageComponent } from "../../details-page/details-page.component";
 import { SideMenuComponent } from "../../../components/side-menu/side-menu.components";
 import { ModuleService } from '../../../services/module.service';
 import { Directorio } from '../../../interfaces/directorio.interface';
-import { Folder } from '../../../interfaces/folder.interface';
-import { Reporte } from '../../../interfaces/reporte.interface';
 
 @Component({
   selector: 'app-cuantitativo-page',
@@ -21,19 +19,24 @@ export default class CuantitativoPageComponent {
     id: 0,
     tipo: 'carpeta'
   });
-
+  selectedItem = signal<{ id: number, tipo: 'carpeta' | 'reporte' } | null>(null);
 
 
   constructor() {
     this.moduloService.setType('cuantitativo');
     this.moduloService.getDirectorio(1).subscribe((resp) => {
       this.directorio.set(resp);
-    })
+    });
+
+    effect(() => {
+      const item = this.hoveredItem();
+      if (item) {
+        this.selectedItem.set(item);
+      }
+    });
   }
 
   mandarItem(evento: { id: number, tipo: 'carpeta' | 'reporte' }) {
-    console.log('Elemento antes de actualizar signal', evento);
     this.hoveredItem.set(evento);
-    console.log('Elemento despues de ser guardado en signal', this.hoveredItem());
   }
 }

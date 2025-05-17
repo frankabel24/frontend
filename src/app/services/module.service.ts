@@ -1,12 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ContentType } from '../interfaces/content-type.interface';
 import { ReportType } from '../interfaces/report-type.interface';
 import { Folder } from '../interfaces/folder.interface';
 import { Directorio } from '../interfaces/directorio.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Reporte } from '../interfaces/reporte.interface';
+
+const reportesUrl = environment.reportUrls;
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +73,7 @@ export class ModuleService {
       this.obtenerReporteById(elemento.id).subscribe((resp) => {
         this.reporte.set(resp);
       });
-      this.elemento.set({ id: this.reporte().id_padre, tipo: 'reporte' });
+
     }
     this.elemento.set(elemento);
   }
@@ -95,7 +97,40 @@ export class ModuleService {
     return paths[this.currentType];
   }
 
-  agregarReporte(reporte: any) {
-    this.http.post(`${environment.reportUrls}`, reporte);
+  createReporte(reporteLike: Partial<Reporte>): Observable<Reporte> {
+    console.log('[DEBUG] Reporte enviado:', JSON.stringify(reporteLike, null, 2));
+
+    return this.http.post<Reporte>(`${reportesUrl}`, reporteLike).pipe(
+      tap({
+        next: (response) => console.log('[DEBUG] Respuesta exitosa:', response),
+        error: (error) => {
+          console.error('[ERROR] Fallo en petición:', error);
+          throw error;
+        }
+      })
+    );
+  }
+
+  updateReporte(
+    id: string,
+    reporteLike: Partial<Reporte>
+  ): Observable<Reporte> {
+    return this.http
+      .put<Reporte>(`${reportesUrl}${id}/`, reporteLike)
+  }
+
+  deleteReporte(id: number) {
+    return this.http.delete(`${reportesUrl}${id}/`)
+  }
+
+  exportarReporte(datosReporte: any): Observable<HttpResponse<Blob>> {
+    return this.http.post(
+      `${environment.exportarpdfUrls}`,
+      datosReporte,
+      {
+        responseType: 'blob',
+        observe: 'response'
+      }
+    );
   }
 }

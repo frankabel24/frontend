@@ -1,5 +1,5 @@
 import { DirectorioComponent } from '../../directorio/directorio.component';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { HeaderComponent } from "../../../components/header/header.component";
 import { DetailsPageComponent } from "../../details-page/details-page.component";
 import { SideMenuComponent } from "../../../components/side-menu/side-menu.components";
@@ -21,6 +21,8 @@ export default class CruzadoPageComponent {
     id: 0,
     tipo: 'carpeta'
   });
+  selectedItem = signal<{ id: number, tipo: 'carpeta' | 'reporte' } | null>(null);
+
 
 
 
@@ -28,12 +30,17 @@ export default class CruzadoPageComponent {
     this.moduloService.setType('cruzado');
     this.moduloService.getDirectorio(3).subscribe((resp) => {
       this.directorio.set(resp);
-    })
+    });
+    effect(() => {
+      const item = this.hoveredItem();
+      if (item) {
+        this.selectedItem.set(item);
+      }
+    });
   }
 
   mandarItem(evento: { id: number, tipo: 'carpeta' | 'reporte' }) {
-    console.log('Elemento antes de actualizar signal', evento);
+
     this.hoveredItem.set(evento);
-    console.log('Elemento despues de ser guardado en signal', this.hoveredItem());
   }
 }

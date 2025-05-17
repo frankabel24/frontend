@@ -1,17 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FilterComponent } from '../../../components/filter/filter.component';
 import { ModuleService } from '../../../services/module.service';
 import { FormUtils } from '../../../utils/form-utils';
 import { Reporte } from '../../../interfaces/reporte.interface';
-import { Folder } from '../../../interfaces/folder.interface';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
   selector: 'app-nuevo-reporte-listado',
-  imports: [FilterComponent, ReactiveFormsModule, CdkDrag, CdkDropList, CdkDropListGroup],
+  imports: [FilterComponent, ReactiveFormsModule, CdkDrag, CdkDropList, CdkDropListGroup, RouterLink, RouterLinkActive],
   templateUrl: './nuevo-reporte-listado.component.html',
 })
 export class NuevoReporteListadoComponent {
@@ -19,10 +21,10 @@ export class NuevoReporteListadoComponent {
   moduloService = inject(ModuleService);
   formUtils = FormUtils;
   filtrosSeleccionados = signal<string>('');
-  idPadre = signal<number>(0);
-  tipoReporte = signal<number>(0);
-  reporte = signal<Reporte>({} as Reporte)
-  carpeta = signal<Folder>({} as Folder)
+  dialog = inject(MatDialog);
+  router = inject(Router);
+  snackBar = inject(MatSnackBar);
+
 
   campos = [
     'Primer Nombre',
@@ -49,32 +51,17 @@ export class NuevoReporteListadoComponent {
     id_tipo_reporte: [2],
   })
 
+  get reportePath() {
+    return this.moduloService.getReportePath();
+  }
+
   LlenarFiltro(evento: string) {
     this.filtrosSeleccionados.set(evento);
     this.myForm.get('filtros')!.setValue(this.filtrosSeleccionados());
 
   }
 
-  ObtenerIdPadre(elemento: { id: number, tipo: 'carpeta' | 'reporte' }) {
 
-    if (elemento.tipo === 'reporte') {
-
-      this.moduloService.obtenerReporteById(elemento.id).subscribe((resp) => {
-        this.reporte.set(resp);
-
-        console.log(this.reporte());
-      });
-
-    }
-
-    if (elemento.tipo === 'carpeta') {
-      this.moduloService.obtenerCarpetaById(elemento.id).subscribe((resp) => {
-        this.carpeta.set(resp);
-        console.log(this.carpeta());
-        console.log('Entre a las careptas y te di la que tenia ese id');
-      })
-    }
-  }
 
   drop(evento: CdkDragDrop<string[]>) {
 
@@ -91,23 +78,59 @@ export class NuevoReporteListadoComponent {
     }
   }
 
-  onSubmit() {
-    const elemento = this.moduloService.elemento();
-    console.log({ elemento });
-    this.ObtenerIdPadre(elemento);
-    if (elemento.tipo === 'reporte') {
-      this.myForm.get('id_padre')!.setValue(this.reporte().id_padre);
+  onCancel() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        titulo: 'Cancelar Acción',
+        mensaje: '¿Está seguro de cancelar la acción? Se perderán todos los cambios realizados.',
+        botonAceptar: 'Cancelar',
+        botonCancelar: 'Continuar'
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.router.navigate(['/dashboard-' + this.moduloService.getType().toLowerCase()]);
+      }
+    });
+  }
+
+
+  onSubmit() {
+    this.myForm.markAllAsTouched();
+    const elemento = this.moduloService.elemento();
+
+    if (elemento.tipo === 'reporte') {
+      this.myForm.get('id_padre')!.setValue(this.moduloService.reporte().id_padre);
+    } else {
+      this.myForm.get('id_padre')!.setValue(elemento.id);
     }
-    if (elemento.tipo === 'carpeta') {
-      this.myForm.get('id_padre')!.setValue(this.carpeta().id);
-    }
+
+    const isValid = this.myForm.valid;
+    if (!isValid) return;
 
     const reporte: Reporte = {
       ...this.myForm.value,
+      campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
     };
 
-    console.log(reporte);
-
+    this.moduloService.createReporte(reporte).subscribe({
+      next: (response) => {
+        console.log('[DEBUG] Reporte creado:', response);
+        this.snackBar.open('Reporte creado satisfactoriamente', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['custom-snackbar']
+        });
+        this.router.navigate([`/dashboard-${this.moduloService.getType()}`]);
+      },
+      error: (error) => {
+        console.error('[ERROR] No se pudo crear el reporte:', error);
+        this.snackBar.open('Error al crear el reporte', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+      }
+    });
   }
 }

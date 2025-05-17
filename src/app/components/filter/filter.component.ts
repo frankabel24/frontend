@@ -1,5 +1,5 @@
 
-import { Component, effect, inject, output, signal } from '@angular/core';
+import { Component, effect, inject, Injector, input, OnInit, output, runInInjectionContext, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { of, switchMap, tap } from 'rxjs';
 import { FormUtils } from '../../utils/form-utils';
@@ -9,7 +9,7 @@ import { FormUtils } from '../../utils/form-utils';
   imports: [ReactiveFormsModule],
   templateUrl: './filter.component.html',
 })
-export class FilterComponent {
+export class FilterComponent implements OnInit {
 
   opcionesCampo = [
     'Facultad',
@@ -63,12 +63,16 @@ export class FilterComponent {
     '24',
   ]
 
+  filtros = input<string>();
   fb = inject(FormBuilder);
   formUtils = FormUtils;
   campos = signal(this.opcionesCampo);
   valores = signal<string[]>([]);
   filtroString = signal('');
+  nuevosFiltros = signal('');
   filtrosSeleccionados = output<string>();
+  #injector = inject(Injector);
+
 
 
   myForm: FormGroup = this.fb.group({
@@ -76,6 +80,18 @@ export class FilterComponent {
     signo: ['', Validators.required],
     valor: ['', Validators.required]
   })
+
+  ngOnInit() {
+    runInInjectionContext(this.#injector, () => {
+      effect(() => {
+        const currentValue = this.filtros();
+        if (currentValue) {
+          this.filtroString.update(prev => currentValue);
+          console.log(this.nuevosFiltros())
+        }
+      });
+    });
+  }
 
 
   getValoresByCampo(campo: string) {
@@ -120,26 +136,26 @@ export class FilterComponent {
     this.filtroString.update(prev => prev ? `${prev} ${palabra}` : '');
   }
 
-  emitirOutput(filtros: string) {
-    this.filtrosSeleccionados.emit(filtros);
-  }
 
   onAdicionar() {
     this.myForm.markAllAsTouched();
-
     if (this.myForm.valid) {
       const campo = this.myForm.get('campo')!.value;
       const signo = this.myForm.get('signo')!.value;
       const valor = this.myForm.get('valor')!.value;
 
-      const filtroActual = `${campo} ${signo} ${valor}`;
-
-      this.filtroString.update(prev => prev ? `${prev} ${filtroActual}` : filtroActual);
+      const nuevoFiltro = `${campo} ${signo} ${valor}`;
+      this.filtroString.update(prev => prev ? `${prev} ${nuevoFiltro}` : nuevoFiltro);
 
       this.emitirOutput(this.filtroString());
     }
   }
+
+  emitirOutput(filtros: string) {
+    this.filtrosSeleccionados.emit(filtros);
+  }
 }
+
 
 
 

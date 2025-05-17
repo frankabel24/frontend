@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Output, signal } from '@angular/core';
 
 import { SideMenuComponent } from "../../../components/side-menu/side-menu.components";
 import { DirectorioComponent } from "../../directorio/directorio.component";
@@ -6,13 +6,10 @@ import { DetailsPageComponent } from "../../details-page/details-page.component"
 import { HeaderComponent } from "../../../components/header/header.component";
 import { ModuleService } from '../../../services/module.service';
 import { Directorio } from '../../../interfaces/directorio.interface';
-import { Folder } from '../../../interfaces/folder.interface';
-import { Reporte } from '../../../interfaces/reporte.interface';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-listado-page',
-  imports: [SideMenuComponent, DetailsPageComponent, HeaderComponent, DirectorioComponent, RouterOutlet],
+  imports: [SideMenuComponent, DetailsPageComponent, HeaderComponent, DirectorioComponent],
   templateUrl: './listado-page.component.html',
 })
 export default class ListadoPageComponent {
@@ -22,6 +19,7 @@ export default class ListadoPageComponent {
     id: 0,
     tipo: 'carpeta'
   });
+  selectedItem = signal<{ id: number, tipo: 'carpeta' | 'reporte' } | null>(null);
 
 
 
@@ -31,10 +29,16 @@ export default class ListadoPageComponent {
       this.directorio.set(resp);
     });
 
+    effect(() => {
+      const item = this.hoveredItem();
+      if (item) {
+        this.selectedItem.set(item);
+      }
+    });
+
   }
 
   mandarItem(evento: { id: number, tipo: 'carpeta' | 'reporte' }) {
-
     this.hoveredItem.set(evento);
   }
 
