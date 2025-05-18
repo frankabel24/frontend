@@ -5,5 +5,6 @@ export const environment = {
   reportUrls: 'http://127.0.0.1:8000/config-reportes/',
   directorioUrls: 'http://127.0.0.1:8000/api/contenido-by-id/',
   exportarpdfUrls: 'http://127.0.0.1:8000/api/exportar-pdf/',
+  contenidoByIdUrls: 'http://127.0.0.1:8000/api/contenido-por-id/'
 
 };

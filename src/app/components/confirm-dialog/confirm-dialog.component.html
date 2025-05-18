@@ -7,6 +7,10 @@
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="false">{{ data.botonCancelar }}</button>
+  @if (data.botonCancelar) {
+  <button mat-button (click)="cerrar(false)">
+    {{ data.botonCancelar }}
+  </button>
+  }
   <button mat-button color="warn" [mat-dialog-close]="true">{{ data.botonAceptar }}</button>
 </div>

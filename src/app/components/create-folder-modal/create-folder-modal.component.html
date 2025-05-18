@@ -1,0 +1,36 @@
+<div class="bg-gray-200 p-8">
+  <header class="flex justify-between">
+    <p class="text-lg">Crear Carpeta</p>
+    <a (click)="onCancel()">
+      <i class="fa-solid fa-list" style="color: #f0841e;"></i>
+    </a>
+  </header>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off" class="mt-2">
+    <!-- Campo de nombre -->
+    <div class="mb-3 flex flex-col">
+      <label class=" px-2 text-lg">Nombre: *</label>
+      <div class="px-2 flex flex-col">
+        <input type="text" class="text-lg border-2 border-amber-600  bg-gray-50 rounded-md p-2" formControlName="name">
+        @if(formUtils.isValidField(form, 'name')){
+        <span class="text-red-500">
+          {{formUtils.getFieldError(form, 'name')}}
+        </span>
+        }
+      </div>
+    </div>
+
+    <div class="flex gap-2 justify-end">
+      <button type="submit" class="inline-flex items-center justify-center px-3 py-1 border border-transparent
+                       text-base font-medium rounded-md shadow-sm bg-amber-500
+                       hover:bg-amber-700 text-white float-right" [disabled]="!form.valid">
+        Aceptar
+      </button>
+      <button type="button" class="inline-flex items-center justify-center px-3 py-1 border border-transparent
+                       text-base font-medium rounded-md shadow-sm bg-amber-500
+                       hover:bg-amber-700 text-white float-right" (click)="onCancel()">
+        Cancelar
+      </button>
+    </div>
+
+  </form>
+</div>

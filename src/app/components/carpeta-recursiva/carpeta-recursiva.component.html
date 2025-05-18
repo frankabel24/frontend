@@ -1,6 +1,6 @@
 <a class="flex gap-1 items-center cursor-pointer ">
   <i class="fa-solid fa-folder-open" style="color: #d68e1e;"></i>
-  <span class="px-2 rounded cursor-pointer transition-colors duration-200 hover:bg-blue-600"
+  <span class="px-2 rounded cursor-pointer transition-colors duration-200 hover:bg-amber-600 hover:text-gray-50 "
     (click)="onClick({id: carpeta().carpeta.id, tipo: 'carpeta'})">
     {{carpeta().carpeta.nombre_carpeta}}
   </span>
@@ -17,7 +17,7 @@
   <a>
     <div class="flex gap-0.5 items-center cursor-pointer">
       <i class="fa-solid fa-file" style="color: #f08e1e;"></i>
-      <span class="px-2 rounded hover:bg-blue-600"
+      <span class="px-2 rounded hover:bg-amber-600 hover:text-gray-50"
         (click)="onClick({id: reporte.id, tipo: 'reporte'})">{{reporte.titulo_reporte}}</span>
     </div>
   </a>

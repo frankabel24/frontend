@@ -40,6 +40,7 @@ export default class ListadoPageComponent {
 
   mandarItem(evento: { id: number, tipo: 'carpeta' | 'reporte' }) {
     this.hoveredItem.set(evento);
+
   }
 
 

@@ -11,5 +11,19 @@ import { MatButtonModule } from '@angular/material/button';
 export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) { }
+
+  cerrar(cancelar: boolean): void {
+    this.dialogRef.close(cancelar);
+  }
+}
+
+// Interfaz para los datos del diálogo
+export interface DialogData {
+  titulo: string;
+  mensaje: string;
+  botonAceptar: string;
+  botonCancelar?: string;  // Ahora es opcional
+
 }

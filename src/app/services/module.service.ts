@@ -24,7 +24,7 @@ export class ModuleService {
   private currentType: 'listado' | 'cuantitativo' | 'cruzado' = 'listado';
 
   constructor() {
-    this.getCarpetas();
+
     this.getReportTypes();
   }
 
@@ -38,13 +38,6 @@ export class ModuleService {
   getReportTypes() {
     this.http.get<ReportType[]>(`${environment.reportTypeUrls}`).subscribe((resp) => {
       this.reportTypes.set(resp);
-    })
-  }
-
-  //Funcion para obtener todas las carpetas que hay en el sistema
-  getCarpetas() {
-    this.http.get<Folder[]>(`${environment.folderUrls}`).subscribe((resp) => {
-      this.carpetas.set(resp);
     })
   }
 
@@ -72,10 +65,29 @@ export class ModuleService {
     if (elemento.tipo === 'reporte') {
       this.obtenerReporteById(elemento.id).subscribe((resp) => {
         this.reporte.set(resp);
+
       });
 
     }
     this.elemento.set(elemento);
+  }
+
+  obtenerContenidoByCarpeta(id_carpeta: number): Observable<Directorio> {
+    const headers = new HttpHeaders({
+      'id-carpeta': String(id_carpeta),
+    });
+
+    return this.http.get<Directorio>(`${environment.contenidoByIdUrls}`, { headers }).pipe(
+      tap({
+        next: (response) => {
+          console.log('[DEBUG] Contenido de carpeta obtenido:', response);
+        },
+        error: (error) => {
+          console.error('[ERROR] Fallo al obtener contenido de carpeta:', error);
+          throw error;
+        }
+      })
+    );
   }
 
 
@@ -120,7 +132,7 @@ export class ModuleService {
   }
 
   deleteReporte(id: number) {
-    return this.http.delete(`${reportesUrl}${id}/`)
+    return this.http.delete(`${reportesUrl}${id}/`);
   }
 
   exportarReporte(datosReporte: any): Observable<HttpResponse<Blob>> {
@@ -132,5 +144,27 @@ export class ModuleService {
         observe: 'response'
       }
     );
+  }
+
+  createCarpeta(folderData: Partial<Folder>): Observable<Folder> {
+    return this.http.post<Folder>(`${environment.folderUrls}`, folderData).pipe(
+      tap({
+        next: (response) => {
+          console.log('[DEBUG] Carpeta creada exitosamente:', response);
+        },
+        error: (error) => {
+          console.error('[ERROR] Fallo al crear carpeta:', error);
+          throw error;
+        }
+      })
+    );
+  }
+
+  updateCarpeta(id: number, carpetaData: Partial<Folder>): Observable<Folder> {
+    return this.http.put<Folder>(`${environment.folderUrls}${id}/`, carpetaData);
+  }
+
+  deleteCarpeta(id: number) {
+    return this.http.delete(`${environment.folderUrls}${id}/`);
   }
 }
