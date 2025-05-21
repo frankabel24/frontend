@@ -5,7 +5,7 @@ import { ContentType } from '../interfaces/content-type.interface';
 import { ReportType } from '../interfaces/report-type.interface';
 import { Folder } from '../interfaces/folder.interface';
 import { Directorio } from '../interfaces/directorio.interface';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Reporte } from '../interfaces/reporte.interface';
 
 const reportesUrl = environment.reportUrls;
@@ -36,7 +36,9 @@ export class ModuleService {
   }
 
   getReportTypes() {
-    this.http.get<ReportType[]>(`${environment.reportTypeUrls}`).subscribe((resp) => {
+    this.http.get<ReportType[]>(`${environment.reportTypeUrls}`).pipe(
+      map(resp => resp.sort((a, b) => a.id - b.id))
+    ).subscribe((resp) => {
       this.reportTypes.set(resp);
     })
   }

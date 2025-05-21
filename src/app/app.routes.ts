@@ -15,12 +15,12 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/cruzado-page/cruzado.routes').then(m => m.cruzadoRoutes),
   },
   {
-    path: 'registrar-carpeta',
-    loadComponent: () => import('./pages/registrar-carpeta/registrar-carpeta.component'),
+    path: 'tipos-contenido',
+    loadComponent: () => import('./pages/tipos-contenido-nomenclador/tipos-contenido-nomenclador.component')
   },
   {
-    path: 'modificar-carpeta',
-    loadComponent: () => import('./pages/modificar-carpeta/modificar-carpeta.component'),
+    path: 'tipos-reportes',
+    loadComponent: () => import('./pages/tipos-reporte-nomenclador/tipos-reporte-nomenclador.component')
   },
   {
     path: '**',

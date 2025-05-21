@@ -1,13 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { SideMenuItemComponent } from "../side-menu-reports/side-menu-item.component";
-import { ModuleService } from '../../../services/module.service';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu-content',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './side-menu-content.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SideMenuContentComponent {
-  moduloService = inject(ModuleService);
-}
+export class SideMenuContentComponent { }
+
