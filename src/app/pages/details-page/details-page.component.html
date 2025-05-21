@@ -25,13 +25,14 @@
       <h1 class=" ml-3 p-2 text-gray-50">Directorio {{carpeta().nombre_carpeta}}</h1>
     </header>
     <div class="flex gap-2">
-      <div class="flex ">
+      <div class="flex gap-2">
         <img src="/fotoperfil.jpg" class="w-[100px] h-[120px] object-cover" alt="Foto de Perfil" />
-        <img src="" alt="Trabajador">
+        <img src="/trabajador.png" class="w-[27px] h-[120px] object-cover rounded-l-md" alt="Trabajador">
       </div>
       <div class="flex flex-col">
-        <h3>Nombre Directorio: {{carpeta().nombre_carpeta}}</h3>
-        <h3>Nombre(s) Creador: {{carpeta().propietario}}</h3>
+        <h3 class="mb-2">Nombre Directorio: {{carpeta().nombre_carpeta}}</h3>
+        <h3 class="mb-2">Nombre(s) Creador: {{carpeta().propietario}}</h3>
+        <h3 class="mb-2">Usuario Propietario: frankanr</h3>
       </div>
     </div>
   </div>
@@ -59,18 +60,19 @@
   <div class="mt-2">
     <header class="flex justify-start items-center px-2.5 bg-amber-600 mb-2">
       <div>
-        <i class="fa-solid fa-folder-open" style="color: #ffffff;"></i>
+        <i class="fa-solid fa-file" style="color: #ffffff;"></i>
       </div>
       <h1 class=" ml-3 p-2 text-neutral-50"> {{reporte().titulo_reporte}}</h1>
     </header>
     <div class="flex gap-2">
-      <div class="flex ">
-        <img src="/fotoperfil.jpg" class="w-[100px] h-[100px] object-cover" alt="Foto de Perfil" />
-        <img src="" alt="Trabajador">
+      <div class="flex gap-2">
+        <img src="/fotoperfil.jpg" class="w-[100px] h-[120px] object-cover" alt="Foto de Perfil" />
+        <img src="/trabajador.png" class="w-[27px] h-[120px] object-cover rounded-l-md" alt="Trabajador">
       </div>
       <div class="flex flex-col">
-        <h3>Nombre Reporte: {{reporte().titulo_reporte}}</h3>
-        <h3>Nombre(s) Creador: {{reporte().realizado_por}}</h3>
+        <h3 class="mb-2">Nombre Reporte: {{reporte().titulo_reporte}}</h3>
+        <h3 class="mb-2">Nombre(s) Creador: {{reporte().realizado_por}}</h3>
+        <h3 class="mb-2">Usuario Propietario: frankanr</h3>
       </div>
     </div>
     <hr class="mt-1.5">

@@ -30,6 +30,7 @@ export class ModificarReporteListadoComponent implements OnInit {
   isEditMode = false;
   camposSeleccionados: string[] = [];
   snackBar = inject(MatSnackBar);
+  camposFiltrados = [''];
 
   campos = [
     'Primer Nombre',
@@ -90,6 +91,10 @@ export class ModificarReporteListadoComponent implements OnInit {
         });
 
         this.filtrosSeleccionados.set(reporte.filtros);
+
+        this.camposFiltrados = this.campos.filter(campo =>
+          !reporte.campos_seleccionados.includes(campo)
+        );
 
         this.camposSeleccionados = reporte.campos_seleccionados
           .split(',')

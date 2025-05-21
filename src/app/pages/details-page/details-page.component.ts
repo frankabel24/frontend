@@ -9,6 +9,7 @@ import { Item } from '../../interfaces/item.interface';
 import { catchError, of } from 'rxjs';
 import { CreateFolderModalComponent } from '../../components/create-folder-modal/create-folder-modal.component';
 import { ModificarFolderModalComponent } from '../../components/modificar-folder-modal/modificar-folder-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-details-page',
@@ -23,6 +24,7 @@ export class DetailsPageComponent {
   moduloService = inject(ModuleService);
   router = inject(Router);
   dialog = inject(MatDialog);
+  snackBar = inject(MatSnackBar);
 
   constructor() {
     effect(() => {
@@ -99,7 +101,10 @@ export class DetailsPageComponent {
             if (result === true && !tieneContenido) {
               this.moduloService.deleteCarpeta(id).subscribe({
                 next: (response) => {
-                  console.log('[DEBUG] Carpeta eliminada:');
+                  this.snackBar.open('Carpeta eliminada satisfactoriamente', 'Cerrar', {
+                    duration: 3000,
+                    panelClass: ['custom-snackbar']
+                  });
                   window.location.reload();
                 },
                 error: (error) => {
@@ -126,7 +131,7 @@ export class DetailsPageComponent {
     const idReporte = this.reporte().id;
 
     const ruta = `dashboard-${this.moduloService.getType()}/mostrar-reporte-${this.moduloService.getType()}/${idReporte}`;
-    console.log('[DEBUG] Intentando navegar a:', ruta);
+
 
     this.router.navigate([ruta]).then(
       () => console.log('[DEBUG] Navegación exitosa'),
@@ -162,7 +167,10 @@ export class DetailsPageComponent {
       if (result === true) {
         this.moduloService.deleteReporte(id).subscribe({
           next: (response) => {
-            console.log('[DEBUG] Reporte eliminado:');
+            this.snackBar.open('Reporte eliminado satisfactoriamente', 'Cerrar', {
+              duration: 3000,
+              panelClass: ['custom-snackbar']
+            });
             window.location.reload();
           },
           error: (error) => {

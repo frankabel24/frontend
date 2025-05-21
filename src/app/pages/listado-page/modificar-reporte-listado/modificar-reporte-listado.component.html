@@ -8,7 +8,7 @@
 
   <form autocomplete="off" class="mt-2" [formGroup]="myForm" (ngSubmit)="onSubmit()">
 
-    <!-- Campo de nombre -->
+
     <div class="mb-3 flex flex-col">
 
 
@@ -50,7 +50,7 @@
         <div class="flex" cdkDropListGroup>
           <div cdkDropList [cdkDropListData]="campos" (cdkDropListDropped)="drop($event)"
             class="flex-1 p-4 border-2 border-amber-500">
-            @for (campo of campos; track $index) {
+            @for (campo of camposFiltrados; track $index) {
             <h2 cdkDrag class="px-4 py-1 border-2 border-gray-500 rounded-lg mt-2">
               {{campo}}</h2>
             }

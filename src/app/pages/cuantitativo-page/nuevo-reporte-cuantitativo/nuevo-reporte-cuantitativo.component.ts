@@ -117,8 +117,6 @@ export class NuevoReporteCuantitativoComponent {
 
     this.moduloService.createReporte(reporte).subscribe({
       next: (response) => {
-        console.log('[DEBUG] Reporte creado:', response);
-        console.log(this.moduloService.getType());
         this.snackBar.open('Reporte creado satisfactoriamente', 'Cerrar', {
           duration: 3000,
           panelClass: ['custom-snackbar']
