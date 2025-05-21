@@ -30,7 +30,8 @@ export class ModificarReporteListadoComponent implements OnInit {
   isEditMode = false;
   camposSeleccionados: string[] = [];
   snackBar = inject(MatSnackBar);
-  camposFiltrados = [''];
+  camposDisponibles: string[] = [];
+  message = signal<string>('');
 
   campos = [
     'Primer Nombre',
@@ -92,13 +93,14 @@ export class ModificarReporteListadoComponent implements OnInit {
 
         this.filtrosSeleccionados.set(reporte.filtros);
 
-        this.camposFiltrados = this.campos.filter(campo =>
-          !reporte.campos_seleccionados.includes(campo)
-        );
-
         this.camposSeleccionados = reporte.campos_seleccionados
           .split(',')
           .map(campo => campo.trim());
+
+        //Actualiza campos disponibles
+        this.camposDisponibles = this.campos.filter(campo =>
+          !this.camposSeleccionados.includes(campo));
+
 
         setTimeout(() => {
           this.filtrosSeleccionados.update(prev => prev);
@@ -157,28 +159,34 @@ export class ModificarReporteListadoComponent implements OnInit {
   onSubmit() {
     if (!this.myForm.valid) return;
 
-    const report: Reporte = {
-      ...this.myForm.value,
-      campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
-    };
+    if (this.camposSeleccionados.length == 0) {
+      this.message.set('Tiene que seleccionar las columnas del reporte')
+    } else {
+      const report: Reporte = {
+        ...this.myForm.value,
+        campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
+      };
 
-    this.moduloService.updateReporte(this.reporteId(), report).subscribe({
-      next: (response) => {
-        console.log('Reporte actualizado exitosamente:', response);
+      this.moduloService.updateReporte(this.reporteId(), report).subscribe({
+        next: (response) => {
+          console.log('Reporte actualizado exitosamente:', response);
 
-        // Mostrar notificación
-        this.snackBar.open('Reporte modificado satisfactoriamente', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['custom-snackbar']
-        });
+          // Mostrar notificación
+          this.snackBar.open('Reporte modificado satisfactoriamente', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['custom-snackbar']
+          });
 
-        this.router.navigate(['/dashboard-listado']);
-      },
-      error: (error) => {
-        console.error('Error al actualizar el reporte:', error);
-        // Manejar el error según tus necesidades
-      }
-    });
+          this.router.navigate(['/dashboard-listado']);
+        },
+        error: (error) => {
+          console.error('Error al actualizar el reporte:', error);
+          // Manejar el error según tus necesidades
+        }
+      });
+    }
+
+
   }
 
 }

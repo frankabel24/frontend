@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ModuleService } from '../../../services/module.service';
 import { Reporte } from '../../../interfaces/reporte.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 
@@ -15,6 +15,7 @@ export class MostrarReporteListadoComponent {
 
   activatedRoute = inject(ActivatedRoute);
   moduloService = inject(ModuleService);
+  router = inject(Router);
   reporte = signal<Reporte>({} as Reporte);
   camposSeleccionados = signal<string[]>([]);
 
@@ -70,6 +71,10 @@ export class MostrarReporteListadoComponent {
         console.error('Error al exportar PDF:', error);
       }
     });
+  }
+
+  onCancel() {
+    this.router.navigate([`/dashboard-${this.moduloService.getType()}`])
   }
 }
 

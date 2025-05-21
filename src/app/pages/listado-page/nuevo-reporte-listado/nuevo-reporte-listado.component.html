@@ -47,6 +47,11 @@
 
       <div class="flex flex-col gap-3 mt-2">
         <label class=" px-2 text-lg">Selección de las columnas:*</label>
+        @if(message() !== ''){
+        <span class="text-red-600">
+          {{message()}}
+        </span>
+        }
         <div class="flex" cdkDropListGroup>
           <div cdkDropList [cdkDropListData]="campos" (cdkDropListDropped)="drop($event)"
             class="flex-1 p-4 border-2 border-amber-500">

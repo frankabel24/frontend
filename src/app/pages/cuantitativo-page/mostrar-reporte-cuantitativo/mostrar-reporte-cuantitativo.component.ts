@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ModuleService } from '../../../services/module.service';
 import { Reporte } from '../../../interfaces/reporte.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 
 @Component({
@@ -11,10 +11,12 @@ import { map } from 'rxjs';
   templateUrl: './mostrar-reporte-cuantitativo.component.html',
 })
 export class MostrarReporteCuantitativoComponent {
+
   activatedRoute = inject(ActivatedRoute);
   moduloService = inject(ModuleService);
   reporte = signal<Reporte>({} as Reporte);
   camposSeleccionados = signal<string[]>([]);
+  router = inject(Router);
 
   reporteId = toSignal(
     this.activatedRoute.params.pipe(
@@ -41,5 +43,9 @@ export class MostrarReporteCuantitativoComponent {
         console.error('Error al cargar el reporte:', error);
       }
     });
+  }
+
+  onCancel() {
+    this.router.navigate([`/dashboard-${this.moduloService.getType()}`])
   }
 }

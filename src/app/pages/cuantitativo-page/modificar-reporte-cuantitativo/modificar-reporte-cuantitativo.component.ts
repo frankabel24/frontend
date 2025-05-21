@@ -27,9 +27,11 @@ export class ModificarReporteCuantitativoComponent {
   formUtils = FormUtils;
   filtrosSeleccionados = signal<string>('');
   isEditMode = false;
-  camposSeleccionados: string[] = [];
   snackBar = inject(MatSnackBar);
   camposFiltrados = [''];
+  message = signal<string>('');
+  camposDisponibles: string[] = [];  // Campos que aún no están seleccionados
+  camposSeleccionados: string[] = []; // Campos ya seleccionados
 
   campos = [
     'Primer Nombre',
@@ -66,7 +68,9 @@ export class ModificarReporteCuantitativoComponent {
   ngOnInit(): void {
 
     this.checkEditMode();
+
   }
+
 
   private checkEditMode() {
     const id = this.reporteId();
@@ -91,13 +95,17 @@ export class ModificarReporteCuantitativoComponent {
 
         this.filtrosSeleccionados.set(reporte.filtros);
 
-        this.camposFiltrados = this.campos.filter(campo =>
-          !reporte.campos_seleccionados.includes(campo)
-        );
 
+        //Actualiza los campos seleccionados
         this.camposSeleccionados = reporte.campos_seleccionados
           .split(',')
           .map(campo => campo.trim());
+        console.log('SELECCIONADOS', this.camposSeleccionados)
+
+        //Actualiza campos disponibles
+        this.camposDisponibles = this.campos.filter(campo =>
+          !this.camposSeleccionados.includes(campo));
+        console.log('DISPONIBLES', this.camposDisponibles)
 
         setTimeout(() => {
           this.filtrosSeleccionados.update(prev => prev);
@@ -135,6 +143,8 @@ export class ModificarReporteCuantitativoComponent {
     }
   }
 
+
+
   onCancel() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -156,28 +166,32 @@ export class ModificarReporteCuantitativoComponent {
   onSubmit() {
     if (!this.myForm.valid) return;
 
-    const report: Reporte = {
-      ...this.myForm.value,
-      campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
-    };
+    if (this.camposSeleccionados.length == 0) {
+      this.message.set('Tiene que seleccionar las columnas del reporte')
+    } else {
+      const report: Reporte = {
+        ...this.myForm.value,
+        campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
+      };
 
-    this.moduloService.updateReporte(this.reporteId(), report).subscribe({
-      next: (response) => {
-        console.log('Reporte actualizado exitosamente:', response);
+      this.moduloService.updateReporte(this.reporteId(), report).subscribe({
+        next: (response) => {
+          console.log('Reporte actualizado exitosamente:', response);
 
-        // Mostrar notificación
-        this.snackBar.open('Reporte modificado satisfactoriamente', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['custom-snackbar']
-        });
+          // Mostrar notificación
+          this.snackBar.open('Reporte modificado satisfactoriamente', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['custom-snackbar']
+          });
 
-        this.router.navigate([`/dashboard-${this.moduloService.getType()}`]);
-      },
-      error: (error) => {
-        console.error('Error al actualizar el reporte:', error);
-        // Manejar el error según tus necesidades
-      }
-    });
+          this.router.navigate(['/dashboard-' + this.moduloService.getType()]);
+        },
+        error: (error) => {
+          console.error('Error al actualizar el reporte:', error);
+          // Manejar el error según tus necesidades
+        }
+      });
+    }
   }
 
 }

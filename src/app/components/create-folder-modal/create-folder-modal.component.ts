@@ -45,7 +45,6 @@ export class CreateFolderModalComponent {
         id_padre: this.data.parentId
       };
 
-      console.log(folderData);
 
       this.moduloService.createCarpeta(folderData).subscribe({
         next: () => {

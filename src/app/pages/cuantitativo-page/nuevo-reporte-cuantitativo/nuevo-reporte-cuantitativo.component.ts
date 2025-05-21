@@ -24,6 +24,7 @@ export class NuevoReporteCuantitativoComponent {
   dialog = inject(MatDialog);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
+  message = signal<string>('');
 
 
   campos = [
@@ -99,38 +100,44 @@ export class NuevoReporteCuantitativoComponent {
 
   onSubmit() {
     this.myForm.markAllAsTouched();
-    const elemento = this.moduloService.elemento();
-
-    if (elemento.tipo === 'reporte') {
-      this.myForm.get('id_padre')!.setValue(this.moduloService.reporte().id_padre);
+    if (this.camposSeleccionados.length == 0) {
+      this.message.set('Tiene que seleccionar las columnas del reporte');
     } else {
-      this.myForm.get('id_padre')!.setValue(elemento.id);
+      const elemento = this.moduloService.elemento();
+
+      if (elemento.tipo === 'reporte') {
+        this.myForm.get('id_padre')!.setValue(this.moduloService.reporte().id_padre);
+      } else {
+        this.myForm.get('id_padre')!.setValue(elemento.id);
+      }
+
+      const isValid = this.myForm.valid;
+      if (!isValid) return;
+
+      const reporte: Reporte = {
+        ...this.myForm.value,
+        campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
+      };
+
+      this.moduloService.createReporte(reporte).subscribe({
+        next: (response) => {
+          console.log('[DEBUG] Reporte creado:', response);
+          this.snackBar.open('Reporte creado satisfactoriamente', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['custom-snackbar']
+          });
+          this.router.navigate([`/dashboard-${this.moduloService.getType()}`]);
+        },
+        error: (error) => {
+          console.error('[ERROR] No se pudo crear el reporte:', error);
+          this.snackBar.open('Error al crear el reporte', 'Cerrar', {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      });
     }
 
-    const isValid = this.myForm.valid;
-    if (!isValid) return;
-
-    const reporte: Reporte = {
-      ...this.myForm.value,
-      campos_seleccionados: this.camposSeleccionados.map(campo => campo.trim()).join(', ')
-    };
-
-    this.moduloService.createReporte(reporte).subscribe({
-      next: (response) => {
-        this.snackBar.open('Reporte creado satisfactoriamente', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['custom-snackbar']
-        });
-        this.router.navigate([`/dashboard-${this.moduloService.getType()}`]);
-      },
-      error: (error) => {
-        console.error('[ERROR] No se pudo crear el reporte:', error);
-        this.snackBar.open('Error al crear el reporte', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['error-snackbar']
-        });
-      }
-    });
   }
 }
 

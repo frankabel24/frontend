@@ -1,13 +1,16 @@
 <div class="flex flex-col  justify-around mx-auto w-full max-w-[550px]  p-6 ">
   <header class="flex justify-between">
     <span>{{reporte().titulo_reporte}}</span>
-    <div class="flex gap-4">
+    <div class="flex gap-4 items-center">
       <button class="rounded-sm bg-red-400 hover:bg-red-600 p-2">
         .pdf
       </button>
       <button class="rounded-sm bg-lime-400 hover:bg-lime-600 p-2">
         .xls
       </button>
+      <a class=" cursor-pointer" (click)="onCancel()">
+        <i class="fa-solid fa-list" style="color: #f0841e;"></i>
+      </a>
     </div>
   </header>
 

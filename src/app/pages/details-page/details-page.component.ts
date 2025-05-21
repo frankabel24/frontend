@@ -133,22 +133,16 @@ export class DetailsPageComponent {
     const ruta = `dashboard-${this.moduloService.getType()}/mostrar-reporte-${this.moduloService.getType()}/${idReporte}`;
 
 
-    this.router.navigate([ruta]).then(
-      () => console.log('[DEBUG] Navegación exitosa'),
-      (error) => console.error('[ERROR] Fallo en la navegación:', error)
-    );
+    this.router.navigate([ruta]);
   }
 
   onModificar() {
     const idReporte = this.reporte().id;
 
     const ruta = `dashboard-${this.moduloService.getType()}/modificar-reporte-${this.moduloService.getType()}/${idReporte}`;
-    console.log('[DEBUG] Intentando navegar a:', ruta);
 
-    this.router.navigate([ruta]).then(
-      () => console.log('[DEBUG] Navegación exitosa'),
-      (error) => console.error('[ERROR] Fallo en la navegación:', error)
-    );
+
+    this.router.navigate([ruta])
 
   }
 
