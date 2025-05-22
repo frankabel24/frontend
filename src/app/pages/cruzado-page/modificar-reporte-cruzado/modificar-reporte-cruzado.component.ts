@@ -97,9 +97,7 @@ export class ModificarReporteCruzadoComponent implements OnInit {
           .split(',')
           .map(campo => campo.trim());
 
-        //Actualiza campos disponibles
-        this.camposDisponibles = this.campos.filter(campo =>
-          !this.camposSeleccionados.includes(campo));
+
 
 
         setTimeout(() => {
@@ -117,15 +115,15 @@ export class ModificarReporteCruzadoComponent implements OnInit {
     const valor = (evento.target as HTMLSelectElement).value;
 
     if (tipo === 'filas') {
-
-      this.filasSeleccionadas = [valor];
-      console.log(this.filasSeleccionadas.length);
-
+      // Solo actualiza si el valor es diferente al actual
+      if (this.filasSeleccionadas[0] !== valor) {
+        this.filasSeleccionadas = [valor];
+      }
     } else {
-
-      this.columnasSeleccionadas = [valor];
-      console.log(this.columnasSeleccionadas.length);
-
+      // Solo actualiza si el valor es diferente al actual
+      if (this.columnasSeleccionadas[0] !== valor) {
+        this.columnasSeleccionadas = [valor];
+      }
     }
   }
 
@@ -143,6 +141,10 @@ export class ModificarReporteCruzadoComponent implements OnInit {
     } else {
       return this.camposSeleccionados[1] === campo;
     }
+  }
+
+  isSelectElement(target: Element): target is HTMLSelectElement {
+    return target instanceof HTMLSelectElement;
   }
 
 
@@ -174,7 +176,24 @@ export class ModificarReporteCruzadoComponent implements OnInit {
   onSubmit() {
     this.myForm.markAllAsTouched();
 
-    if (this.filasSeleccionadas.length == 0 || this.columnasSeleccionadas.length == 0) {
+    console.log(this.filasSeleccionadas);
+    console.log(this.columnasSeleccionadas);
+
+    if (this.filasSeleccionadas.length === 0) {
+      const selectFilas = document.querySelector('select[tipo="filas"]');
+      if (selectFilas && this.isSelectElement(selectFilas)) {
+        this.filasSeleccionadas = [selectFilas.value];
+      }
+    }
+
+    if (this.columnasSeleccionadas.length === 0) {
+      const selectColumnas = document.querySelector('select[tipo="columnas"]');
+      if (selectColumnas && this.isSelectElement(selectColumnas)) {
+        this.columnasSeleccionadas = [selectColumnas.value];
+      }
+    }
+
+    if (this.filasSeleccionadas.length === 0 || this.columnasSeleccionadas.length === 0) {
       this.message.set('Debe seleccionar tanto filas como columnas para el reporte');
       return;
     }

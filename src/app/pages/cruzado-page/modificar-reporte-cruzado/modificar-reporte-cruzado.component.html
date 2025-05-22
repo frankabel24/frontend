@@ -53,7 +53,7 @@
             {{message()}}
           </span>
           }
-          <select (change)="seleccionarCampo($event, 'filas')" [value]="obtenerValorSeleccionado('filas')">
+          <select tipo="filas" (change)="seleccionarCampo($event, 'filas')" [value]="obtenerValorSeleccionado('filas')">
             <option value="">-- Seleccionar --</option>
             @for (item of campos; track $index) {
             <option [value]='item' [selected]="estaSeleccionado(item, 'filas')">{{item}}</option>
@@ -68,7 +68,8 @@
             {{message()}}
           </span>
           }
-          <select (change)="seleccionarCampo($event, 'columnas')" [value]="obtenerValorSeleccionado('columnas')">
+          <select tipo="columnas" (change)="seleccionarCampo($event, 'columnas')"
+            [value]="obtenerValorSeleccionado('columnas')">
             <option value="">-- Seleccionar --</option>
             @for (item of campos; track $index) {
             <option [value]='item' [selected]="estaSeleccionado(item, 'columnas')">{{item}}</option>
