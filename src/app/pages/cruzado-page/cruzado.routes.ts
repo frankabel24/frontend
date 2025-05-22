@@ -20,12 +20,12 @@ export const cruzadoRoutes: Routes = [
         component: NuevoReporteCruzadoComponent,
       },
       {
-        path: 'modificar-reporte-cruzado',
+        path: 'modificar-reporte-cruzado/:id',
         title: 'Modificar Reporte de tipo cruzado',
         component: ModificarReporteCruzadoComponent,
       },
       {
-        path: 'mostrar-reporte-cruzado',
+        path: 'mostrar-reporte-cruzado/:id',
         title: 'Mostrar Reporte de tipo cruzado',
         component: MostrarReporteCruzadoComponent,
       },

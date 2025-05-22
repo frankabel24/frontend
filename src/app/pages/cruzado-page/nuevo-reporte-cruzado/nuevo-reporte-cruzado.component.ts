@@ -67,13 +67,8 @@ export class NuevoReporteCruzadoComponent {
     if (tipo === 'filas') {
 
       this.filasSeleccionadas = [valor];
-      console.log(this.filasSeleccionadas.length);
-
     } else {
-
       this.columnasSeleccionadas = [valor];
-      console.log(this.columnasSeleccionadas.length);
-
     }
   }
 
