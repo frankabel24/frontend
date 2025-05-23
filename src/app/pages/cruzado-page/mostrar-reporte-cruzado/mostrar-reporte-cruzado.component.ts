@@ -20,7 +20,7 @@ export class MostrarReporteCruzadoComponent {
   camposSeleccionados = signal<string[]>([]);
   router = inject(Router);
 
-  Facultades = [
+  Facultad = [
     'FTL',
     'FCIBER',
     'FIO',
@@ -32,6 +32,41 @@ export class MostrarReporteCruzadoComponent {
   Generos = [
     'Femenino',
     'Masculino'
+  ]
+
+  Edad = [
+    '21',
+    '22',
+    '23',
+    '24',
+    '25'
+  ]
+
+  Nombre = [
+    'Frank Abel',
+    'Abel David',
+    'Laurent',
+    'Amanda Melissa',
+    'Yurileidy',
+    'Camila'
+  ]
+
+  Cursos = [
+    'Arquitectura de computadoras',
+    'Computación basada en gestos',
+    'Desarrollo de aplicaciones',
+    'Desarrollo de competencias '
+  ]
+
+  Grupo = [
+    'IDFT101',
+    'IDFT102',
+    'IDFT201',
+    'IDFT202',
+    'IDFT301',
+    'IDFT302',
+    'IDFT401',
+    'IDFT402'
   ]
 
   reporteId = toSignal(
@@ -48,12 +83,14 @@ export class MostrarReporteCruzadoComponent {
     const id = this.reporteId();
     this.moduloService.obtenerReporteById(id).subscribe({
       next: (reporte) => {
+        console.log(reporte);
         this.reporte.set(reporte);
         // Procesamos los campos seleccionados cuando recibimos el reporte
         this.camposSeleccionados.set(
           reporte.campos_seleccionados.split(',')
             .map(campo => campo.trim())
         );
+        console.log(this.camposSeleccionados());
       },
       error: (error) => {
         console.error('Error al cargar el reporte:', error);

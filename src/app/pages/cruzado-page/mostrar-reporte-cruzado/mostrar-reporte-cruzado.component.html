@@ -14,38 +14,128 @@
     </div>
   </header>
 
-  <div class="flex flex-col">
-    <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="overflow-hidden">
-          <table id="tabla-reporte" class="min-w-full">
+  <div class="flex flex-col items-center">
+    <div>
+      <div class="py-2 inline-block ">
+        <div>
+          <table id="tabla-reporte">
             <thead class=" border-b">
               <tr>
 
                 <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
-                  Facultad
+                  {{camposSeleccionados()[0]}}
                 </th>
-                @for (item of Generos; track $index) {
+                @if (camposSeleccionados()[1] === 'Nombre') {
+                @for (nombre of Nombre; track $index) {
+                <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
+                  {{nombre}}
+                </th>
+                }
+                }
+
+                @if (camposSeleccionados()[1] === 'Género') {
+                @for (generos of Generos; track $index) {
+                <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
+                  {{generos}}
+                </th>
+                }
+                }
+
+                @if (camposSeleccionados()[1] === 'Facultad') {
+                @for (item of Facultad; track $index) {
                 <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
                   {{item}}
                 </th>
+                }
+                }
+
+                @if (camposSeleccionados()[1] === 'Edad') {
+                @for (item of Edad; track $index) {
+                <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
+                  {{item}}
+                </th>
+                }
+                }
+
+                @if (camposSeleccionados()[1] === 'Grupo') {
+                @for (item of Grupo; track $index) {
+                <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
+                  {{item}}
+                </th>
+                }
+                }
+
+                @if (camposSeleccionados()[1] === 'Cursos') {
+                @for (item of Cursos; track $index) {
+                <th scope="col" class="text-sm font-medium  px-6 py-4 text-left">
+                  {{item}}
+                </th>
+                }
                 }
 
               </tr>
             </thead>
             <tbody>
-              @for (item of Facultades; track $index) {
+              @if (camposSeleccionados()[0] === 'Nombre') {
+              @for (nombre of Nombre; track $index) {
               <tr class=" border-b">
-                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ item }}</td>
-                <td class="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                  200
-                </td>
-                <td class="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                  500
-                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ nombre }}</td>
+
 
               </tr>
               }
+              }
+
+              @if (camposSeleccionados()[0] === 'Género') {
+              @for (generos of Generos; track $index) {
+              <tr class=" border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ generos }}</td>
+
+
+              </tr>
+              }
+              }
+
+              @if (camposSeleccionados()[0] === 'Facultad') {
+              @for (item of Facultad; track $index) {
+              <tr class=" border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ item }}</td>
+
+
+              </tr>
+              }
+              }
+
+              @if (camposSeleccionados()[0] === 'Edad') {
+              @for (item of Edad; track $index) {
+              <tr class=" border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ item }}</td>
+
+
+              </tr>
+              }
+              }
+
+              @if (camposSeleccionados()[0] === 'Grupo') {
+              @for (item of Grupo; track $index) {
+              <tr class=" border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ item }}</td>
+
+
+              </tr>
+              }
+              }
+
+              @if (camposSeleccionados()[0] === 'Cursos') {
+              @for (item of Cursos; track $index) {
+              <tr class=" border-b">
+                <td class="px-6 py-4 whitespace-nowrap text-sm  ">{{ item }}</td>
+
+
+              </tr>
+              }
+              }
+
 
             </tbody>
           </table>

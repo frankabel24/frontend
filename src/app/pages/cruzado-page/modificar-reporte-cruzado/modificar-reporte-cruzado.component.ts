@@ -34,12 +34,12 @@ export class ModificarReporteCruzadoComponent implements OnInit {
   columnasSeleccionadas: string[] = [];
 
   campos = [
-    'Primer Nombre',
-    'Segundo Nombre',
+    'Nombre',
     'Género',
     'Facultad',
     'Edad',
-    'Grupo'
+    'Grupo',
+    'Cursos',
 
   ]
 
