@@ -28,12 +28,12 @@ export class NuevoReporteListadoComponent {
 
 
   campos = [
-    'Primer Nombre',
+    'Nombre',
     'Género',
     'Facultad',
     'Edad',
     'Grupo',
-    'Curso'
+    'Cursos',
 
   ]
 

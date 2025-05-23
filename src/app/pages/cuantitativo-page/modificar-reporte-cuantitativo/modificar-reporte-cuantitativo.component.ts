@@ -34,12 +34,12 @@ export class ModificarReporteCuantitativoComponent {
   camposSeleccionados: string[] = []; // Campos ya seleccionados
 
   campos = [
-    'Primer Nombre',
-    'Segundo Nombre',
+    'Nombre',
     'Género',
     'Facultad',
     'Edad',
-    'Grupo'
+    'Grupo',
+    'Cursos',
 
   ]
 

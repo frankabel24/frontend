@@ -34,12 +34,12 @@ export class ModificarReporteListadoComponent implements OnInit {
   message = signal<string>('');
 
   campos = [
-    'Primer Nombre',
-    'Segundo Nombre',
+    'Nombre',
     'Género',
     'Facultad',
     'Edad',
-    'Grupo'
+    'Grupo',
+    'Cursos',
 
   ]
 
