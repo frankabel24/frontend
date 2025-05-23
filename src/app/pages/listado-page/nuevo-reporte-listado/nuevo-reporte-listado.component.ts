@@ -29,11 +29,11 @@ export class NuevoReporteListadoComponent {
 
   campos = [
     'Primer Nombre',
-    'Segundo Nombre',
     'Género',
     'Facultad',
     'Edad',
-    'Grupo'
+    'Grupo',
+    'Curso'
 
   ]
 
@@ -42,7 +42,7 @@ export class NuevoReporteListadoComponent {
 
 
   myForm: FormGroup = this.fb.group({
-    titulo_reporte: ['', [Validators.required, Validators.minLength(3)]],
+    titulo_reporte: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[A-Za-z0-9\\s_]+$')]],
     realizado_por: ['Frank Abel'],
     descripcion: ['', Validators.required],
     filtros: [''],
@@ -141,4 +141,5 @@ export class NuevoReporteListadoComponent {
 
 
   }
+
 }

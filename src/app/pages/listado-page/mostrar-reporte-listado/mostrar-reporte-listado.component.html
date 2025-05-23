@@ -2,10 +2,10 @@
   <header class="flex justify-between">
     <span>{{reporte().titulo_reporte}}</span>
     <div class="flex gap-4 items-center">
-      <button class="rounded-sm bg-red-400 hover:bg-red-600 p-2" (click)="exportarAPDF()">
+      <button class="rounded-sm bg-red-400 hover:bg-red-600 p-2 cursor-pointer" (click)="exportarAPDF()">
         .pdf
       </button>
-      <button class="rounded-sm bg-lime-400 hover:bg-lime-600 p-2" (click)="exportarAXLS()">
+      <button class="rounded-sm bg-lime-400 hover:bg-lime-600 p-2 cursor-pointer" (click)="exportarAXLS()">
         .xls
       </button>
       <a class=" cursor-pointer" (click)="onCancel()">

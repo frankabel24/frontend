@@ -42,7 +42,7 @@ export class NuevoReporteCruzadoComponent {
 
 
   myForm: FormGroup = this.fb.group({
-    titulo_reporte: ['', [Validators.required, Validators.minLength(3)]],
+    titulo_reporte: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[A-Za-z0-9\\s_]+$')]],
     realizado_por: ['Frank Abel'],
     descripcion: ['', Validators.required],
     filtros: [''],
