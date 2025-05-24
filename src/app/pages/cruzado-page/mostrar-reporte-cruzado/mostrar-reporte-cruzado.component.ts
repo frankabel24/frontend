@@ -127,9 +127,10 @@ export class MostrarReporteCruzadoComponent {
 
       // Función de encabezado (logo + texto)
       const addHeader = () => {
-        // Logo (15x10mm)
+
         const logoUrl = '/logo.png';
-        pdf.addImage(logoUrl, 'PNG', 15, 10, 15, 10);
+        pdf.addImage(logoUrl, 'PNG', 15, 7, 35, 15);
+
 
         // Texto azul oscuro (RGB: 0, 51, 102)
         pdf.setTextColor(0, 51, 102);
