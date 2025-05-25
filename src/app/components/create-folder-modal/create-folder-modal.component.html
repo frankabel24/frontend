@@ -22,12 +22,12 @@
     <div class="flex gap-2 justify-end">
       <button type="submit" class="inline-flex items-center justify-center px-3 py-1 border border-transparent
                        text-base font-medium rounded-md shadow-sm bg-amber-500
-                       hover:bg-amber-700 text-white float-right" [disabled]="!form.valid">
+                       hover:bg-amber-700 text-white float-right cursor-pointer" [disabled]="!form.valid">
         Aceptar
       </button>
       <button type="button" class="inline-flex items-center justify-center px-3 py-1 border border-transparent
                        text-base font-medium rounded-md shadow-sm bg-amber-500
-                       hover:bg-amber-700 text-white float-right" (click)="onCancel()">
+                       hover:bg-amber-700 text-white float-right cursor-pointer" (click)="onCancel()">
         Cancelar
       </button>
     </div>

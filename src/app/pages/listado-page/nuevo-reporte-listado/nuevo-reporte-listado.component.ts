@@ -122,7 +122,7 @@ export class NuevoReporteListadoComponent {
 
       this.moduloService.createReporte(reporte).subscribe({
         next: (response) => {
-          console.log('[DEBUG] Reporte creado:', response);
+
           this.snackBar.open('Reporte creado satisfactoriamente', 'Cerrar', {
             duration: 3000,
             panelClass: ['custom-snackbar']
@@ -130,7 +130,7 @@ export class NuevoReporteListadoComponent {
           this.router.navigate([`/dashboard-${this.moduloService.getType()}`]);
         },
         error: (error) => {
-          console.error('[ERROR] No se pudo crear el reporte:', error);
+
           this.snackBar.open('Error al crear el reporte', 'Cerrar', {
             duration: 3000,
             panelClass: ['error-snackbar']

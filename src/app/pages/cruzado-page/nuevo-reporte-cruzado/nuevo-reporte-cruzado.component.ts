@@ -94,13 +94,15 @@ export class NuevoReporteCruzadoComponent {
 
   onSubmit() {
     this.myForm.markAllAsTouched();
+    this.message.set('');
 
-    if (this.filasSeleccionadas.length == 0 || this.columnasSeleccionadas.length == 0) {
+    if (this.filasSeleccionadas.length <= 1 || this.columnasSeleccionadas.length <= 1) {
       this.message.set('Debe seleccionar tanto filas como columnas para el reporte');
       return;
     }
 
     const elemento = this.moduloService.elemento();
+    console.log({ elemento });
 
     if (elemento.tipo === 'reporte') {
       this.myForm.get('id_padre')!.setValue(this.moduloService.reporte().id_padre);

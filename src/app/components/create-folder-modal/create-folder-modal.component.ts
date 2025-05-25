@@ -3,9 +3,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ModuleService } from '../../services/module.service';
 import { FormUtils } from '../../utils/form-utils';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Folder } from '../../interfaces/folder.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-create-folder-modal',
@@ -20,6 +21,7 @@ export class CreateFolderModalComponent {
   parentId: number | null = null;
   dialogRef = inject(MatDialogRef<CreateFolderModalComponent>);
   snackBar = inject(MatSnackBar);
+  dialog = inject(MatDialog);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { parentId: number | null }
@@ -30,7 +32,9 @@ export class CreateFolderModalComponent {
   form = new FormGroup({
     name: new FormControl('', [
       Validators.required,
-      Validators.minLength(3)
+      Validators.minLength(3),
+      Validators.maxLength(50),
+      Validators.pattern('^[A-Za-z0-9\\s_]+$')
     ])
   });
 
@@ -70,6 +74,20 @@ export class CreateFolderModalComponent {
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        titulo: 'Cancelar Acción',
+        mensaje: '¿Está seguro de cancelar la acción? Se perderán todos los cambios realizados.',
+        botonAceptar: 'Cancelar',
+        botonCancelar: 'Continuar'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.dialogRef.close();
+      }
+    });
   }
 }
