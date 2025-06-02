@@ -1,22 +1,24 @@
-<app-header [id_item]="hoveredItem()" />
+<div class="flex flex-col h-screen overflow-hidden">
+  <app-header [id_item]="hoveredItem()" />
 
-<div class="flex justify-around  ">
-  <section class="  rounded-lg mx-4 mt-3">
-    <app-directorio [directorio]="directorio()" (item)="mandarItem($event)" />
-  </section>
+  <div class="flex flex-1 overflow-hidden">
+    <main
+      class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 p-5 rounded-lg shadow-sm">
+      <div class="flex">
+        <section class="rounded-lg">
+          <app-directorio [directorio]="directorio()" (item)="mandarItem($event)" />
+        </section>
 
+        <section class="p-4 rounded-lg mt-3">
+          @if (selectedItem() !== null) {
+          <app-details-page [item]="selectedItem()" />
+          }
+        </section>
+      </div>
+    </main>
 
-  <section class=" p-4 rounded-lg mx-4 mt-3">
-    @if (selectedItem() !== null) {
-    <app-details-page [item]="selectedItem()" />
-    }
-
-
-  </section>
-
-  <aside class=" p-4 rounded-lg mx-4 mt-3">
-    <app-side-menu />
-  </aside>
-
-
+    <aside>
+      <app-side-menu />
+    </aside>
+  </div>
 </div>

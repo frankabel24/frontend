@@ -9,11 +9,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ButtonComponent } from '../../../components/ui/button/button.component';
 
 
 @Component({
   selector: 'app-nuevo-reporte-listado',
-  imports: [FilterComponent, ReactiveFormsModule, CdkDrag, CdkDropList, CdkDropListGroup, RouterLink, RouterLinkActive],
+  imports: [FilterComponent, ReactiveFormsModule, CdkDrag, CdkDropList, CdkDropListGroup, RouterLink, ButtonComponent],
   templateUrl: './nuevo-reporte-listado.component.html',
 })
 export class NuevoReporteListadoComponent {
