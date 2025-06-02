@@ -6,12 +6,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ModificarFolderModalComponent } from '../modificar-folder-modal/modificar-folder-modal.component';
 import { Folder } from '../../interfaces/folder.interface';
-import { ButtonComponent } from '../ui/button/button.component';
 
 
 @Component({
   selector: 'app-header',
-  imports: [ButtonComponent],
+  imports: [],
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
