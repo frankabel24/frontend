@@ -1,6 +1,6 @@
 import { Component, effect, EventEmitter, inject, Output, signal } from '@angular/core';
 
-import { SideMenuComponent } from "../../../components/side-menu/side-menu.components";
+import { SideMenuComponent } from "../../../components/side-menu/side-menu.component";
 import { DirectorioComponent } from "../../directorio/directorio.component";
 import { DetailsPageComponent } from "../../details-page/details-page.component";
 import { HeaderComponent } from "../../../components/header/header.component";

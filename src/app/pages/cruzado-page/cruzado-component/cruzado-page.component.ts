@@ -2,7 +2,7 @@ import { DirectorioComponent } from '../../directorio/directorio.component';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { HeaderComponent } from "../../../components/header/header.component";
 import { DetailsPageComponent } from "../../details-page/details-page.component";
-import { SideMenuComponent } from "../../../components/side-menu/side-menu.components";
+import { SideMenuComponent } from "../../../components/side-menu/side-menu.component";
 import { ModuleService } from '../../../services/module.service';
 import { Directorio } from '../../../interfaces/directorio.interface';
 import { Folder } from '../../../interfaces/folder.interface';
