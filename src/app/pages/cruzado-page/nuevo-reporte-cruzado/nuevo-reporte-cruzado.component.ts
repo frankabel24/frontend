@@ -96,11 +96,16 @@ export class NuevoReporteCruzadoComponent {
     this.myForm.markAllAsTouched();
     this.message.set('');
 
-    if (this.filasSeleccionadas.length <= 1 || this.columnasSeleccionadas.length <= 1) {
-      this.message.set('Debe seleccionar tanto filas como columnas para el reporte');
+    if (this.filasSeleccionadas.length === 0 || this.columnasSeleccionadas.length === 0 ||
+      this.filasSeleccionadas[0] === '' || this.columnasSeleccionadas[0] === '') {
+      this.message.set('Debe seleccionar tanto filas como columnas para el reporte y no pueden estar vacías.');
+      console.log('Filas seleccionadas:', this.filasSeleccionadas);
+      console.log('Columnas seleccionadas:', this.columnasSeleccionadas);
+      console.log('Validación de filas/columnas fallida.');
       return;
     }
 
+    this.message.set('');
     const elemento = this.moduloService.elemento();
     console.log({ elemento });
 
@@ -120,7 +125,6 @@ export class NuevoReporteCruzadoComponent {
         .join(', ')
     };
 
-    console.log(reporte);
 
     this.moduloService.createReporte(reporte).subscribe({
       next: (response) => {
@@ -142,5 +146,8 @@ export class NuevoReporteCruzadoComponent {
 
 
 
+
   }
+
+
 }
